@@ -6,7 +6,21 @@ const userRoutes = require('./routes/users');
 
 
 const app = express();
-app.use(cors({ origin: '*' }));
+const allowedOrigins = ['http://localhost:3000', 'https://your-production-frontend-url.com'];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // allow requests with no origin like Postman or server-to-server requests
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+}));
+
 app.use(express.json());
 require("./jobs/autoForwardJob.js");
 app.use('/api/auth', authRoutes);
