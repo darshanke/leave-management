@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { applyLeave } from "../features/employeeSlice";
 
-export default function LeaveForm() {
+export default function LeaveForm({setRefersHistory}) {
   const [form, setForm] = useState({
     leaveType: "Casual",
     reasonType: "Sick",
@@ -43,6 +43,7 @@ export default function LeaveForm() {
         endDate: "",
         reason: "",
       });
+      setRefersHistory(prev=>!prev);
     } catch (err) {
       alert("Failed: " + (err?.message || "error"));
     }

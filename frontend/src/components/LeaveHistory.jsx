@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHistory } from "../features/employeeSlice";
 
-export default function LeaveHistory() {
+export default function LeaveHistory({refersHistory}) {
   const dispatch = useDispatch();
   const history = useSelector((s) => s.employee.history);
 
   useEffect(() => {
     dispatch(fetchHistory());
-  }, [dispatch]);
+  }, [dispatch, refersHistory]);
 
   return (
     <div className="bg-white p-4 rounded shadow max-w-3xl">

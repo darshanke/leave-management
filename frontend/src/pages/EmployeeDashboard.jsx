@@ -4,11 +4,14 @@ import LeaveHistory from "../components/LeaveHistory";
 
 import { logout } from "../features/authSlice";
 import { useDispatch } from "react-redux";
+import React from "react";
 
 export default function EmployeeDashboard() {
+    const [refersHistory, setRefersHistory] = React.useState(false);  
     const dispatch = useDispatch();
   const nav = useNavigate();
     const handleLogout = () => {
+   
         dispatch(logout());
         nav("/login");
       };
@@ -39,7 +42,7 @@ export default function EmployeeDashboard() {
           <h2 className="text-2xl font-semibold text-indigo-900 mb-4 border-b border-indigo-400 pb-2">
             Apply for Leave
           </h2>
-          <LeaveForm />
+          <LeaveForm  setRefersHistory={setRefersHistory}/>
         </div>
 
         <div className="flex-1 bg-white p-6 rounded-xl shadow-lg hover:shadow-indigo-400 transition-shadow duration-300 relative">
@@ -53,7 +56,7 @@ export default function EmployeeDashboard() {
             title="Real-time updates"
           />
 
-          <LeaveHistory />
+          <LeaveHistory refersHistory={refersHistory}/>
         </div>
       </div>
     </div>
