@@ -11,13 +11,15 @@ const allowedOrigins = [
   'http://localhost:3000',
 ];
 app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  credentials: false, 
+  origin: 'https://factoessnew.vercel.app',
+  credentials: true,
+}));
+app.options('*', cors({
+  origin: 'https://factoessnew.vercel.app',
+  credentials: true,
 }));
 
-app.options('*', cors());
+
 
 app.use(express.json());
 require("./jobs/autoForwardJob.js");
