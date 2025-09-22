@@ -1,29 +1,3 @@
-// const jwt = require('jsonwebtoken');
-// const User = require('../models/User');
-
-// const auth = (roles = null) => {
-//   return async (req, res, next) => {
-//     try {
-//       const authHeader = req.headers.authorization;
-//       if (!authHeader) return res.status(401).json({ message: 'No token provided' });
-//       const token = authHeader.split(' ')[1];
-//       const payload = jwt.verify(token, process.env.JWT_SECRET);
-//       console.log("payload ",payload);
-//       const user = await User.findById(payload.id).select('-passwordHash');
-//       if (!user) return res.status(401).json({ message: 'Invalid token' });
-//       if (roles && !roles.includes(user.role)) {
-//         return res.status(403).json({ message: 'Forbidden' });
-//       }
-//       req.user = user;
-//       next();
-//     } catch (err) {
-//       console.error(err);
-//       return res.status(401).json({ message: 'Unauthorized', error: err.message });
-//     }
-//   };
-// };
-
-// module.exports = auth;
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 

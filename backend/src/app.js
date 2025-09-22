@@ -6,7 +6,7 @@ const userRoutes = require('./routes/users');
 
 
 const app = express();
-const allowedOrigins = ['http://localhost:3000', 'https://your-production-frontend-url.com'];
+const allowedOrigins = ['http://localhost:3000', 'https://factoessnew-o6qtaanv2-darshan-k-es-projects.vercel.app/'];
 
 app.use(cors({
   origin: function(origin, callback) {
