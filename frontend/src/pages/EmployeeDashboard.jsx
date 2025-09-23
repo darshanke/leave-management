@@ -8,10 +8,10 @@ import React from "react";
 
 export default function EmployeeDashboard() {
     const [refersHistory, setRefersHistory] = React.useState(false);  
+    //dispatch and navigate
     const dispatch = useDispatch();
-  const nav = useNavigate();
+    const nav = useNavigate();
     const handleLogout = () => {
-   
         dispatch(logout());
         nav("/login");
       };

@@ -17,18 +17,32 @@ export default function Register() {
   const dispatch = useDispatch();
   const nav = useNavigate();
 
+  //submit handler
   const submit = async (e) => {
     e.preventDefault();
+      let res;
     try {
       setError(null);
-      await dispatch(registerUser(form)).unwrap();
+      res = await dispatch(registerUser(form)).unwrap();
       alert("Registered successfully! Please login.");
       nav("/login");
     } catch (err) {
-      setError(err?.message || "Registration failed");
+      if(err?.status === 409) {
+        setError("User with this email or employee ID already exists.");
+      }
+      else if(err?.status === 422) {
+        setError("Please fill all required fields correctly." , err?.errors.path);
+      }
+      else if(err?.status === 500) { 
+        setError("Server error. Please try again later.");
+      }else{
+         setError(err?.message || "Registration failed");
+      }
+     
     }
   };
 
+  //jsx for register form
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 px-6 py-10">
       <div className="max-w-3xl mx-auto bg-white p-10 rounded-xl shadow-md">
@@ -67,6 +81,7 @@ export default function Register() {
             </label>
             <input
               type="email"
+              required
               placeholder="Enter your email"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
               value={form.email}
@@ -81,6 +96,7 @@ export default function Register() {
             </label>
             <input
               placeholder="Enter your employee ID"
+              required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
               value={form.employeeId}
               onChange={(e) => setForm({ ...form, employeeId: e.target.value })}
@@ -94,6 +110,7 @@ export default function Register() {
             </label>
             <input
               placeholder="Enter your name"
+              required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -107,6 +124,7 @@ export default function Register() {
             </label>
             <input
               placeholder="Enter your department"
+              required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
               value={form.department}
               onChange={(e) => setForm({ ...form, department: e.target.value })}
@@ -120,6 +138,7 @@ export default function Register() {
             </label>
             <input
               type="email"
+              
               placeholder="Enter manager's email"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
               value={form.managerEmail}
@@ -134,11 +153,13 @@ export default function Register() {
             </label>
             <input
               type="password"
+              required
               placeholder="Create a password"
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
+            
           </div>
 
           {/* Submit */}

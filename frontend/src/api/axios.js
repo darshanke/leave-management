@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "https://leave-management-6xsz.onrender.com/api",
+  withCredentials: true,
 });
 
 API.interceptors.request.use((req) => {
